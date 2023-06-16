@@ -1,2 +1,2 @@
 # age-calculator-app
-An age-calculator application using Next.js, React and CSS modules. 
+An age-calculator application using Next.js, React, Typescript and CSS modules. 
