@@ -3,6 +3,7 @@ import { useState } from 'react'
 import styles from './page.module.css'
 
 export default function Home() {
+
   const [bday, setBday] = useState({
     day: {
       value: '',
@@ -23,6 +24,7 @@ export default function Home() {
     day: '--' | number,
     month: '--' | number
   }
+
   const [result, setResult] = useState<Result>({
     year: '--',
     day: '--',
@@ -43,29 +45,32 @@ export default function Home() {
   const handleSubmit = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
-    const currMonth = new Date().getMonth()
-    const currDay = new Date().getDay()
+    const currMonth = new Date().getMonth() + 1
+    const currDay = new Date().getDate()
     const currYear = new Date().getFullYear()
 
+    let resultYear = currYear - Number(bday.year.value)
     let resultMonth
     let resultDay
-    let resultYear = currYear - Number(bday.year.value)
 
-    if (Number(bday.month.value) > currMonth) {
+    if (Number(bday.month.value) === currMonth) {
+      resultMonth = 0
+      Number(bday.day.value) > currDay ? resultYear-- : null
+    }
+     else if (Number(bday.month.value) > currMonth) {
       resultYear--
-      resultMonth = 12 - (Number(bday.month.value) - currMonth)
-    } else {
-      resultMonth = 12 - (currMonth - Number(bday.month.value))
+      resultMonth = 12 - (Number(bday.month.value) - (currMonth))
+    }
+     else {
+      resultMonth = 12 - ((currMonth) - Number(bday.month.value))
     }
 
     if (Number(bday.day.value) > currDay) {
       resultMonth--
-      resultDay = 31 - (Number(bday.day.value) - currDay)
+      resultDay = Number(bday.day.value) - currDay
     } else {
-      resultDay = 31 - (currDay - Number(bday.day.value))
+      resultDay = currDay - Number(bday.day.value)
     }
-
-    console.log(resultYear, resultMonth, resultDay)
 
     setResult({
       ...result,
@@ -91,10 +96,12 @@ export default function Home() {
               onBlur={() => setBday({ ...bday, day: { ...bday.day, isTouched: true } })}
               style={!isValidDay(bday.day.value) && bday.day.isTouched ? { border: '1px solid red' } : { border: '1px solid #a9a9a9' }}
             />
+
             {!isValidDay(bday.day.value) && bday.day.isTouched ?
               <p>Must be a valid day.</p>
               : null
             }
+
           </div>
           <div className="input-box">
             <label htmlFor="month">MONTH</label>
