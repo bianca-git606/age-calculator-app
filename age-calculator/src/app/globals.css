@@ -5,6 +5,20 @@
     --smokey-grey: hsl(0, 1%, 44%);
 }
 
+button {
+  background-color: var(--purple);
+  border-radius: 100%;
+  padding: .7rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  border-width: 3px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 p {
   font-size: .5rem;
   color: red;
@@ -58,8 +72,6 @@ hr {
     width: 90%;
     height: 0;
 }
-  
-
 
 @media (max-width: 880px) {
     h1 {
